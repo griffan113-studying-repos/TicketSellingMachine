@@ -4,5 +4,8 @@ public class Main {
 
         ticketMachine.insertMoney(2);
         ticketMachine.insertMoney(2);
+        ticketMachine.insertMoney(2);
+
+        ticketMachine.printTicket(5);
     }
 }
