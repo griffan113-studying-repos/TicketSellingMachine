@@ -1,6 +1,3 @@
-import java.text.DecimalFormat;
-import java.util.HashMap;
-
 /**
  * Simula o comportamento de uma máquina de vender bilhetes
  */
@@ -9,17 +6,11 @@ public class TicketMachine {
     float invoice; // Faturamento total
     float balance;
 
-    HashMap<Float, Float> coinTypes;
+    float[] coinTypes;
 
     public TicketMachine(float price) {
         this.price = price;
-
-        coinTypes = new HashMap<Float, Float>();
-
-        coinTypes.put(0.5f, 0.5f);
-        coinTypes.put(0.25f, 0.25f);
-        coinTypes.put(0.10f, 0.10f);
-        coinTypes.put(0.05f, 0.05f);
+        coinTypes = new float[]{1f, 0.5f, 0.25f, 0.10f, 0.05f};
     }
 
     public float getPrice() {
@@ -64,11 +55,11 @@ public class TicketMachine {
             invoice += total;
             balance -= total;
 
+            print(quantity);
+
             if (balance > 0) {
                 refund(balance);
             }
-
-            print(quantity);
         }
     }
 
@@ -82,13 +73,17 @@ public class TicketMachine {
         System.out.println("Troco total de: R$" + balance);
 
         float remainingBalance = balance;
-        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        int index = 0;
 
+        while(remainingBalance > 0) {
+            float coin = coinTypes[index];
 
-        for (float coin : coinTypes.values()) {
-            if (remainingBalance >= coin) remainingBalance -= coin;
-
-            System.out.printf("Retornando moedas de troco: R$" + coin + "\n");
+            if (remainingBalance >= coin) {
+                remainingBalance -= coin;
+                System.out.println("Retornando moeda de: R$" + coin);
+            } else {
+                index ++;
+            }
         }
     }
 
@@ -96,7 +91,7 @@ public class TicketMachine {
         reduceBalance(balance);
         this.balance -= balance;
 
-        if (this.balance == 0) System.out.println("Operação realizada com justiça");
+        if (this.balance == 0) System.out.println("Troco retornado com sucesso");
         else System.out.println("Deu ruim");
     }
 }

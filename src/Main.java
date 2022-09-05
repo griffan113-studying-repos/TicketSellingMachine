@@ -5,6 +5,7 @@ public class Main {
         ticketMachine.insertMoney(2);
         ticketMachine.insertMoney(2);
         ticketMachine.insertMoney(2);
+        ticketMachine.insertMoney(3.25f);
 
         ticketMachine.printTicket(5);
     }
